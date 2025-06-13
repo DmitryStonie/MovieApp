@@ -2,6 +2,7 @@ package com.example.movieapp.movierecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,8 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                MovieViewHolder(binding)
+                val holder = MovieViewHolder(binding)
+                holder
             }
 
             else -> {
@@ -32,7 +34,8 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                MovieViewHolder(binding)
+                val holder = MovieViewHolder(binding)
+                holder
             }
         }
         return viewHolder
