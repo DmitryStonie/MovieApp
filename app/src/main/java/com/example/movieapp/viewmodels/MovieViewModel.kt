@@ -22,9 +22,15 @@ class MovieViewModel(val dataRepository: DataRepository) : ViewModel() {
         get() = movie?.name?.split(" ")?.joinToString(" ") { it.replaceFirstChar(Char::titlecase) }
             ?: ""
     val localizedName: String get() = movie?.localizedName ?: ""
-    val rating: String? get() = String.format(Locale.UK, "%1$,.1f", movie?.rating)
-    val description: String? get() = movie?.description
-    val movieInfo: String? get() = "${movie?.genres?.joinToString(", ")}, ${movie?.year}"
+    val rating: String?
+        get() = if (movie?.rating != null) {
+            String.format(Locale.UK, "%1$,.1f", movie?.rating)
+        } else {
+            "-"
+        }
+    val description: String? get() = movie?.description ?: ""
+    val movieInfo: String?
+        get() = "${movie?.genres?.joinToString(", ")}${if (movie?.genres == null || movie?.genres?.size == 0) "" else ", "}${movie?.year}"
     val imageUrl: String? get() = movie?.imageUrl
 
     companion object {
@@ -33,6 +39,8 @@ class MovieViewModel(val dataRepository: DataRepository) : ViewModel() {
         fun loadImage(view: ImageView, url: String?, error: Drawable, placeholder: Drawable) {
             if (url != null) {
                 Picasso.get().load(url).error(error).placeholder(placeholder).into(view)
+            } else{
+                view.setImageDrawable(placeholder)
             }
         }
     }

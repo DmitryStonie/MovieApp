@@ -30,6 +30,5 @@ class MainActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             window.statusBarColor = getColor(R.color.blue)
         }
-
     }
 }

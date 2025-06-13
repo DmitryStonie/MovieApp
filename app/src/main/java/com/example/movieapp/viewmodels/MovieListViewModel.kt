@@ -37,6 +37,11 @@ class MovieListViewModel(val dataRepository: DataRepository): ViewModel() {
             }
         }
     }
+
+    fun getMoviesByGenre(genre: String?){
+        this@MovieListViewModel.movies.postValue(dataRepository.getMovies(genre))
+    }
+
     fun selectMovie(id: Int){
         dataRepository.selectMovie(id)
     }
