@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MovieApp</string>
     <string name="back_button">Back button</string>
+    <string name="rating_source_kinopoisk">КиноПоиск</string>
+    <string name="genres_title">Жанры</string>
+    <string name="movies_title">Фильмы</string>
+    <string name="internet_error_message">Ошибка подключения сети</string>
+    <string name="try_again_button_text">Повторить</string>
 </resources>

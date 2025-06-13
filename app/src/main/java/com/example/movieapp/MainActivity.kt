@@ -1,16 +1,14 @@
 package com.example.movieapp
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.WindowInsets
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.lifecycleScope
-import com.example.movieapp.retrofit.MovieService
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import com.example.movieapp.repository.DataRepository
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,16 +16,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.fragment_container_view)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://s3-eu-west-1.amazonaws.com/").build()
-        val movieService = retrofit.create(MovieService::class.java)
-        lifecycleScope.launch {
-            val movies = movieService.getMovies()
-            Log.d("INFO", "${movies.body()?.films}")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) { // Android 15+
+            window.decorView.setOnApplyWindowInsetsListener { view, insets ->
+                val statusBarInsets = insets.getInsets(WindowInsets.Type.statusBars())
+                view.setBackgroundColor(getColor(R.color.blue))
+                view.setPadding(0, statusBarInsets.top, 0, 0)
+                insets
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            window.statusBarColor = getColor(R.color.blue)
         }
+
+    }
+    fun getRepository(): DataRepository {
+        return (application as MainApp).getRepository()
     }
 }
