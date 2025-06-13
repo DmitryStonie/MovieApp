@@ -37,6 +37,8 @@
         <item name="android:letterSpacing">0.00625</item>
         <item name="firstBaselineToTopHeight">15sp</item>
         <item name="lastBaselineToBottomHeight">5sp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
     </style>
 
     <style name="roundedImageView">

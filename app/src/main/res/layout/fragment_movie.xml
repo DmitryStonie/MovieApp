@@ -1,97 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.example.movieapp.viewmodels.MovieViewModel" />
+    </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:paddingHorizontal="16dp">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/poster"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintDimensionRatio="13:20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_max="wrap"
-            app:layout_constraintWidth_percent="0.402439"
-            app:shapeAppearanceOverlay="@style/roundedImageView"
-            app:srcCompat="@drawable/photo_sample_2" />
-
-        <TextView
-            android:id="@+id/title"
-            style="@style/movieCardMovieTitleTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="Между нами горы"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/poster" />
-
-        <TextView
-            android:id="@+id/subtitle"
-            style="@style/movieCardMovieSubtitleTextStyle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="драма, 2017 год"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/ratingLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subtitle">
+            android:background="@color/white"
+            android:paddingHorizontal="16dp">
 
-            <TextView
-                android:id="@+id/ratingScore"
-                style="@style/movieCardRatingScoreSubtitleTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="6.7"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/poster"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="24dp"
+                app:layout_constraintDimensionRatio="13:20"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="wrap"
+                app:layout_constraintWidth_percent="0.402439"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
+                app:srcCompat="@drawable/photo_sample_2" />
 
             <TextView
-                android:id="@+id/ratingSource"
-                style="@style/movieCardRatingSourceSubtitleTextStyle"
-                android:layout_width="wrap_content"
+                android:id="@+id/title"
+                style="@style/movieCardMovieTitleTextStyle"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginBottom="3dp"
-                android:text="КиноПоиск"
+                android:layout_marginTop="24dp"
+                android:text="@{viewmodel.localizedName}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/poster"
+                tools:text="Между нами горы" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                style="@style/movieCardMovieSubtitleTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{viewmodel.movieInfo}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title"
+                tools:text="драма, 2017 год" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ratingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/subtitle">
+
+                <TextView
+                    android:id="@+id/ratingScore"
+                    style="@style/movieCardRatingScoreSubtitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewmodel.rating}"
+                    tools:text="6.7"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ratingSource"
+                    style="@style/movieCardRatingSourceSubtitleTextStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="3dp"
+                    android:text="@string/rating_source_kinopoisk"
+                    tools:text="КиноПоиск"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/ratingScore"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/movieCardDescriptionTextStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginBottom="15dp"
+                android:text="@{viewmodel.description}"
+                tools:text="Бен и Алекс, уцелевшие после авиакатастрофы, должны найти общий язык, чтобы выжить в экстремальных условиях далеких заснеженных гор. Когда они понимают, что на помощь к ним никто не придет, они вынуждены отправиться в опасный путь длиной в сотни километров. В заснеженных американских горах им придётся проходить через все ужасы выживания: серьёзные травмы, невозможность связаться с внешним миром, нападение диких животных. В борьбе за жизнь между двумя еще вчера незнакомыми людьми неожиданно возникает притяжение."
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ratingScore"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingLayout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/description"
-            style="@style/movieCardDescriptionTextStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginBottom="15dp"
-            android:text="Бен и Алекс, уцелевшие после авиакатастрофы, должны найти общий язык, чтобы выжить в экстремальных условиях далеких заснеженных гор. Когда они понимают, что на помощь к ним никто не придет, они вынуждены отправиться в опасный путь длиной в сотни километров. В заснеженных американских горах им придётся проходить через все ужасы выживания: серьёзные травмы, невозможность связаться с внешним миром, нападение диких животных. В борьбе за жизнь между двумя еще вчера незнакомыми людьми неожиданно возникает притяжение."
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ratingLayout"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+    </ScrollView>
+</layout>
