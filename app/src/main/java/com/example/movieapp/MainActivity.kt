@@ -7,8 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.movieapp.repository.DataRepository
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -32,9 +30,5 @@ class MainActivity : AppCompatActivity() {
             @Suppress("DEPRECATION")
             window.statusBarColor = getColor(R.color.blue)
         }
-
-    }
-    fun getRepository(): DataRepository {
-        return (application as MainApp).getRepository()
     }
 }

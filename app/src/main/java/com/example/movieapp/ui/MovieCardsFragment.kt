@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.RecyclerviewMoviesBinding
@@ -13,11 +12,12 @@ import com.example.movieapp.movierecyclerview.RecyclerAdapter
 import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.ui.MovieCardFragment.Companion.MOVIE_CARD_FRAGMENT
 import com.example.movieapp.viewmodels.MovieListViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.getValue
 
 class MovieCardsFragment : Fragment() {
     private lateinit var binding: RecyclerviewMoviesBinding
-    val viewModel by viewModels<MovieListViewModel>()
+    val viewModel: MovieListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

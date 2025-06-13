@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.movieapp.viewmodels.MovieListViewModel
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieListScreenBinding
@@ -19,14 +18,17 @@ import com.example.movieapp.recyclerview.viewholders.TextViewHolder
 import com.example.movieapp.ui.MovieCardFragment.Companion.MOVIE_CARD_FRAGMENT
 import com.google.android.material.snackbar.Snackbar
 import android.util.Log
+import com.example.movieapp.movierecyclerview.items.MovieItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentMovieListScreenBinding
-    val viewModel by viewModels<MovieListViewModel>()
+    val viewModel: MovieListViewModel by viewModel()
 
-    lateinit private var genresTitleItem: TitleItem
-    lateinit private var moviesTitleItem: TitleItem
+    private lateinit var genresTitleItem: TitleItem
+    private lateinit var moviesTitleItem: TitleItem
+    private var genreTextItems: ArrayList<TextItem>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,32 +45,54 @@ class MovieListFragment : Fragment() {
         moviesTitleItem = TitleItem(resources.getString(R.string.movies_title))
 
         val adapter = RecyclerAdapter(
-            mutableListOf())
-        adapter.setOnMovieItemClickListener {
+            mutableListOf()
+        )
+        adapter.setOnMovieItemClickListener { movieItem: MovieItem ->
+            viewModel.selectMovie(movieItem.movie.id)
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.fragment_container_view, MovieCardFragment())
                 addToBackStack(MOVIE_CARD_FRAGMENT)
             }.commit()
         }
         adapter.setOnTextItemClickListener { position: Int, holder: TextViewHolder ->
-                if(viewModel.selectedGenrePosition == null){
-                    adapter.items[position] = TextItem((adapter.items[position] as TextItem).text, resources.getColor(R.color.yellow, null))
-                    viewModel.selectedGenrePosition = position
-                    adapter.notifyItemChanged(position)
-                    //reload data
-                } else if (viewModel.selectedGenrePosition == position) {
-                    adapter.items[position] = TextItem((adapter.items[position] as TextItem).text, resources.getColor(R.color.white, null))
-                    viewModel.selectedGenrePosition = null
-                    adapter.notifyItemChanged(position)
-                    //reload data
-                } else {
-                    adapter.items[viewModel.selectedGenrePosition!!] = TextItem((adapter.items[viewModel.selectedGenrePosition!!] as TextItem).text, resources.getColor(R.color.white, null))
-                    adapter.notifyItemChanged(viewModel.selectedGenrePosition!!)
-                    adapter.items[position] = TextItem((adapter.items[position] as TextItem).text, resources.getColor(R.color.yellow, null))
-                    viewModel.selectedGenrePosition = position
-                    adapter.notifyItemChanged(position)
-                    //reload data
-                }
+            if (viewModel.selectedGenrePosition == null) {
+                val textItem = TextItem(
+                    (adapter.items[position] as TextItem).text,
+                    resources.getColor(R.color.yellow, null)
+                )
+                genreTextItems?.set(position - 1, textItem)
+                adapter.items[position] = textItem
+                viewModel.selectedGenrePosition = position
+                adapter.notifyItemChanged(position)
+                viewModel.getMoviesByGenre((adapter.items[position] as TextItem).text)
+            } else if (viewModel.selectedGenrePosition == position) {
+                val textItem = TextItem(
+                    (adapter.items[position] as TextItem).text,
+                    resources.getColor(R.color.white, null)
+                )
+                genreTextItems?.set(position - 1, textItem)
+                adapter.items[position] = textItem
+                viewModel.selectedGenrePosition = null
+                adapter.notifyItemChanged(position)
+                viewModel.getMoviesByGenre(null)
+            } else {
+                val ntextItem = TextItem(
+                    (adapter.items[viewModel.selectedGenrePosition!!] as TextItem).text,
+                    resources.getColor(R.color.white, null)
+                )
+                adapter.items[viewModel.selectedGenrePosition!!] = ntextItem
+                genreTextItems?.set(viewModel.selectedGenrePosition!! - 1, ntextItem)
+                adapter.notifyItemChanged(viewModel.selectedGenrePosition!!)
+                val textItem = TextItem(
+                    (adapter.items[position] as TextItem).text,
+                    resources.getColor(R.color.yellow, null)
+                )
+                genreTextItems?.set(position - 1, textItem)
+                adapter.items[position] = textItem
+                viewModel.selectedGenrePosition = position
+                adapter.notifyItemChanged(position)
+                viewModel.getMoviesByGenre(textItem.text)
+            }
         }
 
         binding.movieList.layoutManager = LinearLayoutManager(context)
@@ -79,11 +103,23 @@ class MovieListFragment : Fragment() {
                 showSnackbar()
             } else {
                 val items = arrayListOf<BaseItem>()
+                if (genreTextItems == null) {
+                    genreTextItems = ArrayList<TextItem>()
+                    if (viewModel.genres.value != null) {
+                        genreTextItems = ArrayList<TextItem>()
+                        viewModel.genres.value!!.forEach { genre ->
+                            genreTextItems!!.add(
+                                TextItem(
+                                    genre,
+                                    resources.getColor(R.color.white, null)
+                                )
+                            )
+                        }
+                    }
+                }
                 items.apply {
                     add(genresTitleItem)
-                    if (viewModel.genres.value != null) {
-                        addAll(viewModel.genres.value!!.map { genre -> TextItem(genre, resources.getColor(R.color.white, null)) })
-                    }
+                    addAll(genreTextItems!!)
                     add(moviesTitleItem)
                     add(MoviesItem(movies))
                 }

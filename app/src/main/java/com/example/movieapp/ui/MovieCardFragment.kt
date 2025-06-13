@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import com.example.movieapp.databinding.FragmentMovieScreenBinding
 import com.example.movieapp.viewmodels.MovieViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import android.util.Log
 
 class MovieCardFragment: Fragment() {
     override fun onCreateView(
@@ -16,8 +17,10 @@ class MovieCardFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentMovieScreenBinding.inflate(layoutInflater, container, false)
-        val viewModel by requireActivity().viewModels<MovieViewModel>()
+        val viewModel: MovieViewModel by viewModel()
+        viewModel.getSelectedMovie()
         binding.viewmodel = viewModel
+        Log.d("INFO", "viewmodel setted")
         binding.lifecycleOwner = this
         binding.topAppBar.backButton.setOnClickListener {
             parentFragmentManager.popBackStack()

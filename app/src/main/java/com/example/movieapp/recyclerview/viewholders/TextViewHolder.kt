@@ -12,7 +12,7 @@ class TextViewHolder(
         this.item = item
         binding.text = item.text
         binding.textItem.setBackgroundColor(item.color)
-        Log.d("INFO", "Bind TextViewHolder")
+        Log.d("INFO", "Bind TextViewHolder ${item.text}")
     }
 
 }

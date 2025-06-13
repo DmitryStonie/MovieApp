@@ -5,13 +5,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.model.Movie
+import com.example.movieapp.repository.DataRepository
 import com.example.movieapp.retrofit.FilmService
 import com.example.movieapp.util.toMovie
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieListViewModel: ViewModel() {
+class MovieListViewModel(val dataRepository: DataRepository): ViewModel() {
     private val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://s3-eu-west-1.amazonaws.com/").build()
     private val filmService = retrofit.create(FilmService::class.java)
     val genres = MutableLiveData<Set<String>>()
@@ -26,6 +27,7 @@ class MovieListViewModel: ViewModel() {
                 val result = filmService.getFilms()
                 result.body()?.films?.forEach { film -> film.genres?.let{genres.addAll(it)} }
                 movies = result.body()?.films?.map { film -> film.toMovie() } ?: listOf()
+                dataRepository.setMovies(movies)
                 this@MovieListViewModel.genres.postValue(genres)
                 this@MovieListViewModel.movies.postValue(movies)
             } catch(e: Exception){
@@ -34,5 +36,13 @@ class MovieListViewModel: ViewModel() {
                 this@MovieListViewModel.movies.postValue(null)
             }
         }
+    }
+
+    fun getMoviesByGenre(genre: String?){
+        this@MovieListViewModel.movies.postValue(dataRepository.getMovies(genre))
+    }
+
+    fun selectMovie(id: Int){
+        dataRepository.selectMovie(id)
     }
 }
