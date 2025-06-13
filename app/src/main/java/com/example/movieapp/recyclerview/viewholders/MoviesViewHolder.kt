@@ -8,7 +8,7 @@ import com.example.movieapp.movierecyclerview.RecyclerAdapter
 import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 
-class MoviesViewHolder(private val binding: RecyclerviewMoviesBinding, private val onClick: (() -> Unit)?) :
+class MoviesViewHolder(private val binding: RecyclerviewMoviesBinding, private val onClick: ((movieItem: MovieItem) -> Unit)?) :
     BaseViewHolder(binding.root) {
     fun bind(item: MoviesItem) {
         binding.movieRecycler.layoutManager = GridLayoutManager(binding.root.context, 2)

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.movieapp.viewmodels.MovieListViewModel
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieListScreenBinding
@@ -19,11 +18,13 @@ import com.example.movieapp.recyclerview.viewholders.TextViewHolder
 import com.example.movieapp.ui.MovieCardFragment.Companion.MOVIE_CARD_FRAGMENT
 import com.google.android.material.snackbar.Snackbar
 import android.util.Log
+import com.example.movieapp.movierecyclerview.items.MovieItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class MovieListFragment : Fragment() {
     private lateinit var binding: FragmentMovieListScreenBinding
-    val viewModel by viewModels<MovieListViewModel>()
+    val viewModel: MovieListViewModel by viewModel()
 
     lateinit private var genresTitleItem: TitleItem
     lateinit private var moviesTitleItem: TitleItem
@@ -44,7 +45,8 @@ class MovieListFragment : Fragment() {
 
         val adapter = RecyclerAdapter(
             mutableListOf())
-        adapter.setOnMovieItemClickListener {
+        adapter.setOnMovieItemClickListener { movieItem: MovieItem ->
+            viewModel.selectMovie(movieItem.movie.id)
             parentFragmentManager.beginTransaction().apply {
                 add(R.id.fragment_container_view, MovieCardFragment())
                 addToBackStack(MOVIE_CARD_FRAGMENT)

@@ -57,4 +57,6 @@ dependencies {
     val fragment_ktx_version = "1.8.6"
     implementation("androidx.fragment:fragment-ktx:$fragment_ktx_version")
     implementation("com.squareup.picasso:picasso:2.8")
+    val koin_version = "4.1.0"
+    implementation("io.insert-koin:koin-android:$koin_version")
 }

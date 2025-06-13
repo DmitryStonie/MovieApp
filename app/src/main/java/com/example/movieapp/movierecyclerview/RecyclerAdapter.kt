@@ -12,7 +12,7 @@ import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.movierecyclerview.viewholders.BaseViewHolder
 import com.example.movieapp.movierecyclerview.viewholders.MovieViewHolder
 
-class RecyclerAdapter(var items: List<BaseItem>, private val onClick: (() -> Unit)?) :
+class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieItem: MovieItem) -> Unit)?) :
     RecyclerView.Adapter<BaseViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -24,9 +24,7 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: (() -> Uni
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                val holder = MovieViewHolder(binding)
-                holder.itemView.setOnClickListener { onClick }
-                holder
+                MovieViewHolder(binding)
             }
 
             else -> {
@@ -34,9 +32,7 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: (() -> Uni
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                val holder = MovieViewHolder(binding)
-                holder.itemView.setOnClickListener { onClick }
-                holder
+                MovieViewHolder(binding)
             }
         }
         return viewHolder
@@ -52,6 +48,9 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: (() -> Uni
         when (holder) {
             is MovieViewHolder -> {
                 holder.bind(items[position] as MovieItem)
+                holder.itemView.setOnClickListener {
+                    onClick?.invoke(items[position] as MovieItem)
+                }
             }
         }
     }

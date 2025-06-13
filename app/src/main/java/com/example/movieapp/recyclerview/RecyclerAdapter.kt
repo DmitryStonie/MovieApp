@@ -9,6 +9,7 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.RecyclerviewMoviesBinding
 import com.example.movieapp.databinding.RecyclerviewTextItemBinding
 import com.example.movieapp.databinding.RecyclerviewTitleItemBinding
+import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.recyclerview.items.BaseItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 import com.example.movieapp.recyclerview.items.TextItem
@@ -20,7 +21,7 @@ import com.example.movieapp.recyclerview.viewholders.TitleViewHolder
 
 class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<BaseViewHolder>() {
     var onTextClick: ((position: Int, holder: TextViewHolder) -> Unit)? = null
-    var onMovieClick: (() -> Unit)? = null
+    var onMovieClick: ((movieItem: MovieItem) -> Unit)? = null
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -114,7 +115,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
         this.onTextClick = onTextClick
     }
 
-    fun setOnMovieItemClickListener(onMovieClick: () -> Unit) {
+    fun setOnMovieItemClickListener(onMovieClick: (movieItem: MovieItem) -> Unit) {
         this.onMovieClick = onMovieClick
     }
 

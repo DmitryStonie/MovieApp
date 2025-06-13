@@ -30,7 +30,10 @@
                 app:layout_constraintWidth_max="wrap"
                 app:layout_constraintWidth_percent="0.402439"
                 app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:srcCompat="@drawable/photo_sample_2" />
+                app:imageUrl="@{viewmodel.imageUrl}"
+                app:error="@{@drawable/poster_unavailable}"
+                app:placeholder="@{@drawable/poster_unavailable}"
+                tools:srcCompat="@drawable/photo_sample_2" />
 
             <TextView
                 android:id="@+id/title"
