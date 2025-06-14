@@ -1,5 +1,6 @@
 package com.example.movieapp.movierecyclerview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -12,7 +13,7 @@ import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.movierecyclerview.viewholders.BaseViewHolder
 import com.example.movieapp.movierecyclerview.viewholders.MovieViewHolder
 
-class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieItem: MovieItem) -> Unit)?) :
+class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieId: Int) -> Unit)?) :
     RecyclerView.Adapter<BaseViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -24,7 +25,8 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                MovieViewHolder(binding)
+                val holder = MovieViewHolder(binding)
+                holder
             }
 
             else -> {
@@ -32,7 +34,8 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
                 val binding = DataBindingUtil.inflate<RecyclerviewMovieItemBinding>(
                     inflater, R.layout.recyclerview_movie_item, parent, false
                 )
-                MovieViewHolder(binding)
+                val holder = MovieViewHolder(binding)
+                holder
             }
         }
         return viewHolder
@@ -47,9 +50,10 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
     ) {
         when (holder) {
             is MovieViewHolder -> {
-                holder.bind(items[position] as MovieItem)
+                val item = items[position] as MovieItem
+                holder.bind(item)
                 holder.itemView.setOnClickListener {
-                    onClick?.invoke(items[position] as MovieItem)
+                    onClick?.invoke(item.movie.id)
                 }
             }
         }
@@ -60,6 +64,7 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
     }
 
     fun updateItems(newItems: List<BaseItem>) {
+        Log.d("INFO", "got new films before update ${newItems.size}")
         val diffUtilCallback = DiffUtilCallback(items, newItems)
         val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         items = newItems

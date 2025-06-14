@@ -9,7 +9,6 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.RecyclerviewMoviesBinding
 import com.example.movieapp.databinding.RecyclerviewTextItemBinding
 import com.example.movieapp.databinding.RecyclerviewTitleItemBinding
-import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.recyclerview.items.BaseItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 import com.example.movieapp.recyclerview.items.TextItem
@@ -19,21 +18,18 @@ import com.example.movieapp.recyclerview.viewholders.MoviesViewHolder
 import com.example.movieapp.recyclerview.viewholders.TextViewHolder
 import com.example.movieapp.recyclerview.viewholders.TitleViewHolder
 
-class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<BaseViewHolder>() {
+class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>()) :
+    RecyclerView.Adapter<BaseViewHolder>() {
     var onTextClick: ((position: Int, holder: TextViewHolder) -> Unit)? = null
-    var onMovieClick: ((movieItem: MovieItem) -> Unit)? = null
+
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): BaseViewHolder {
         val viewHolder = when (viewType) {
             BaseItem.Type.TitleItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTitleItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_title_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_title_item, parent, false
                 )
                 TitleViewHolder(binding)
             }
@@ -41,10 +37,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
             BaseItem.Type.TextItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTextItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_text_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_text_item, parent, false
                 )
                 TextViewHolder(binding)
             }
@@ -52,21 +45,15 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
             BaseItem.Type.MoviesItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewMoviesBinding>(
-                    inflater,
-                    R.layout.recyclerview_movies,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_movies, parent, false
                 )
-                MoviesViewHolder(binding, onMovieClick!!)
+                MoviesViewHolder(binding)
             }
 
             else -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTitleItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_title_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_title_item, parent, false
                 )
                 TitleViewHolder(binding)
             }
@@ -79,8 +66,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder,
-        position: Int
+        holder: BaseViewHolder, position: Int
     ) {
         when (holder) {
             is TextViewHolder -> {
@@ -89,6 +75,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
                     holder.itemView.setOnClickListener { onTextClick!!(position, holder) }
                 }
             }
+
             is TitleViewHolder -> {
                 holder.bind(items[position] as TitleItem)
             }
@@ -109,14 +96,6 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
         items.clear()
         items.addAll(newItems)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun setOnTextItemClickListener(onTextClick: (position: Int, holder: TextViewHolder) -> Unit) {
-        this.onTextClick = onTextClick
-    }
-
-    fun setOnMovieItemClickListener(onMovieClick: (movieItem: MovieItem) -> Unit) {
-        this.onMovieClick = onMovieClick
     }
 
 }
