@@ -4,9 +4,8 @@ import com.example.movieapp.databinding.RecyclerviewMovieItemBinding
 import com.example.movieapp.movierecyclerview.items.MovieItem
 
 class MovieViewHolder(
-    val binding: RecyclerviewMovieItemBinding
-) :
-    BaseViewHolder(binding.root) {
+    private val binding: RecyclerviewMovieItemBinding
+) : BaseViewHolder(binding.root) {
 
     fun bind(item: MovieItem) {
         binding.movie = item.movie

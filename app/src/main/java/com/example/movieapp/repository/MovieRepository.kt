@@ -6,4 +6,5 @@ interface MovieRepository {
     fun setMovies(movies: List<Movie>)
     fun getMovies(genre: String?): List<Movie>?
     fun getMovieById(id: Int): Movie?
+    fun getGenres(): List<String>
 }

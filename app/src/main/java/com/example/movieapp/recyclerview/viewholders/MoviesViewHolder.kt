@@ -1,7 +1,6 @@
 package com.example.movieapp.recyclerview.viewholders
 
 import com.example.movieapp.databinding.RecyclerviewMoviesBinding
-import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 
 class MoviesViewHolder(private val binding: RecyclerviewMoviesBinding) :
@@ -14,7 +13,5 @@ class MoviesViewHolder(private val binding: RecyclerviewMoviesBinding) :
                 item.itemDecoration
             )
         }
-        val items = item.movies.map { movie -> MovieItem(movie) }
-        item.adapter.updateItems(items)
     }
 }

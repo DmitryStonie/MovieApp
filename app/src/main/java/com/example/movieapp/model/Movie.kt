@@ -1,6 +1,6 @@
 package com.example.movieapp.model
 
-data class Movie (
+data class Movie(
     val id: Int,
     val localizedName: String?,
     val name: String?,

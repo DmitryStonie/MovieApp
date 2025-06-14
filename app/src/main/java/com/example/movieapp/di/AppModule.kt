@@ -2,6 +2,8 @@ package com.example.movieapp.di
 
 import com.example.movieapp.repository.MovieRepository
 import com.example.movieapp.repository.MovieRepositoryImpl
+import com.example.movieapp.repository.RemoteMovieRepository
+import com.example.movieapp.repository.RemoteMovieRepositoryImpl
 import com.example.movieapp.repository.UserSelectionsRepository
 import com.example.movieapp.repository.UserSelectionsRepositoryImpl
 import com.example.movieapp.retrofit.FilmService
@@ -16,6 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
     singleOf(::MovieRepositoryImpl) { bind<MovieRepository>() }
+    singleOf(::RemoteMovieRepositoryImpl) { bind<RemoteMovieRepository>() }
     singleOf(::UserSelectionsRepositoryImpl) { bind<UserSelectionsRepository>() }
     viewModelOf(::MovieListViewModel)
     viewModelOf(::MovieViewModel)

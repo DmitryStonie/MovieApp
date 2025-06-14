@@ -23,17 +23,13 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
     var onTextClick: ((position: Int, holder: TextViewHolder) -> Unit)? = null
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
+        parent: ViewGroup, viewType: Int
     ): BaseViewHolder {
         val viewHolder = when (viewType) {
             BaseItem.Type.TitleItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTitleItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_title_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_title_item, parent, false
                 )
                 TitleViewHolder(binding)
             }
@@ -41,10 +37,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
             BaseItem.Type.TextItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTextItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_text_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_text_item, parent, false
                 )
                 TextViewHolder(binding)
             }
@@ -52,10 +45,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
             BaseItem.Type.MoviesItem.value -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewMoviesBinding>(
-                    inflater,
-                    R.layout.recyclerview_movies,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_movies, parent, false
                 )
                 MoviesViewHolder(binding)
             }
@@ -63,10 +53,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
             else -> {
                 val inflater = LayoutInflater.from(parent.context)
                 val binding = DataBindingUtil.inflate<RecyclerviewTitleItemBinding>(
-                    inflater,
-                    R.layout.recyclerview_title_item,
-                    parent,
-                    false
+                    inflater, R.layout.recyclerview_title_item, parent, false
                 )
                 TitleViewHolder(binding)
             }
@@ -79,8 +66,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
     }
 
     override fun onBindViewHolder(
-        holder: BaseViewHolder,
-        position: Int
+        holder: BaseViewHolder, position: Int
     ) {
         when (holder) {
             is TextViewHolder -> {

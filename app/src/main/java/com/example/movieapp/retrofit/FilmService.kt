@@ -5,5 +5,5 @@ import retrofit2.http.GET
 
 interface FilmService {
     @GET("sequeniatesttask/films.json")
-    suspend fun getFilms() : Response<ServiceResponse>
+    suspend fun getFilms(): Response<ServiceResponse>
 }

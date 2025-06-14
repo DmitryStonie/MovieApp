@@ -1,5 +1,6 @@
 package com.example.movieapp.movierecyclerview
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
@@ -63,6 +64,7 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieId:
     }
 
     fun updateItems(newItems: List<BaseItem>) {
+        Log.d("INFO", "got new films before update ${newItems.size}")
         val diffUtilCallback = DiffUtilCallback(items, newItems)
         val diffResult = DiffUtil.calculateDiff(diffUtilCallback)
         items = newItems
