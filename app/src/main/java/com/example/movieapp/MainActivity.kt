@@ -1,16 +1,13 @@
 package com.example.movieapp
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
-import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.core.graphics.drawable.toDrawable
 
 class MainActivity : AppCompatActivity() {
 

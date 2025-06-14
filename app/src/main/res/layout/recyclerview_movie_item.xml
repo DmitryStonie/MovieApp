@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
-            name="image"
-            type="String" />
-        <variable
-            name="name"
-            type="String" />
+            name="movie"
+            type="com.example.movieapp.model.Movie" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,20 +14,22 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/moviePoster"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="13:20"
-            android:scaleType="centerCrop"
             android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            app:error="@{@drawable/poster_unavailable}"
+            app:imageUrl="@{movie.imageUrl}"
             app:layout_constraintBottom_toTopOf="@id/guideline"
+            app:layout_constraintDimensionRatio="13:20"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:placeholder="@{@drawable/poster_unavailable}"
             app:shapeAppearanceOverlay="@style/roundedImageView"
             tools:srcCompat="@drawable/photo_sample" />
 
@@ -37,10 +39,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
+            android:text="@{movie.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline"
-            android:text="@{name}"
             tools:text="Побег из Шоушенка" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -48,10 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
-            app:layout_constraintGuide_end="40dp"
-            />
-
-
+            app:layout_constraintGuide_end="40dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,9 +2,10 @@
 <layout>
 
     <data>
+
         <variable
-            name="title"
-            type="String" />
+            name="titleItem"
+            type="com.example.movieapp.recyclerview.items.TitleItem" />
     </data>
 
 
@@ -20,11 +21,11 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginVertical="8dp"
+            android:text="@{titleItem.title}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:text="@{title}"
             tools:text="Жанры" />
 
 

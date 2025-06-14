@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <variable
             name="viewmodel"
             type="com.example.movieapp.viewmodels.MovieViewModel" />
@@ -23,17 +25,17 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginTop="24dp"
-                app:layout_constraintDimensionRatio="13:20"
                 android:scaleType="centerCrop"
+                app:error="@{@drawable/poster_unavailable}"
+                app:imageUrl="@{viewmodel.imageUrl}"
+                app:layout_constraintDimensionRatio="13:20"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="wrap"
                 app:layout_constraintWidth_percent="0.402439"
-                app:shapeAppearanceOverlay="@style/roundedImageView"
-                app:imageUrl="@{viewmodel.imageUrl}"
-                app:error="@{@drawable/poster_unavailable}"
                 app:placeholder="@{@drawable/poster_unavailable}"
+                app:shapeAppearanceOverlay="@style/roundedImageView"
                 tools:srcCompat="@drawable/photo_sample_2" />
 
             <TextView
@@ -75,10 +77,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewmodel.rating}"
-                    tools:text="6.7"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="6.7" />
 
                 <TextView
                     android:id="@+id/ratingSource"
@@ -86,13 +88,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginBottom="3dp"
                     android:layout_marginTop="9dp"
+                    android:layout_marginBottom="3dp"
                     android:text="@string/rating_source_kinopoisk"
-                    tools:text="КиноПоиск"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@id/ratingScore"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="КиноПоиск" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -104,11 +106,11 @@
                 android:layout_marginTop="14dp"
                 android:layout_marginBottom="15dp"
                 android:text="@{viewmodel.description}"
-                tools:text="Бен и Алекс, уцелевшие после авиакатастрофы, должны найти общий язык, чтобы выжить в экстремальных условиях далеких заснеженных гор. Когда они понимают, что на помощь к ним никто не придет, они вынуждены отправиться в опасный путь длиной в сотни километров. В заснеженных американских горах им придётся проходить через все ужасы выживания: серьёзные травмы, невозможность связаться с внешним миром, нападение диких животных. В борьбе за жизнь между двумя еще вчера незнакомыми людьми неожиданно возникает притяжение."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ratingLayout" />
+                app:layout_constraintTop_toBottomOf="@id/ratingLayout"
+                tools:text="Бен и Алекс, уцелевшие после авиакатастрофы, должны найти общий язык, чтобы выжить в экстремальных условиях далеких заснеженных гор. Когда они понимают, что на помощь к ним никто не придет, они вынуждены отправиться в опасный путь длиной в сотни километров. В заснеженных американских горах им придётся проходить через все ужасы выживания: серьёзные травмы, невозможность связаться с внешним миром, нападение диких животных. В борьбе за жизнь между двумя еще вчера незнакомыми людьми неожиданно возникает притяжение." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,7 @@ package com.example.movieapp.movierecyclerview
 import androidx.recyclerview.widget.DiffUtil
 import com.example.movieapp.movierecyclerview.items.BaseItem
 import com.example.movieapp.movierecyclerview.items.MovieItem
+import android.util.Log
 
 class DiffUtilCallback(private val oldItems: List<BaseItem>, private val newItems: List<BaseItem>): DiffUtil.Callback() {
     override fun getOldListSize() = oldItems.size
@@ -17,6 +18,7 @@ class DiffUtilCallback(private val oldItems: List<BaseItem>, private val newItem
         val newItem: BaseItem = newItems[newItemPosition]
         return when{
             oldItem is MovieItem && newItem is MovieItem -> {
+                Log.d("INFO", "areitemsthesame $oldItem   $newItem")
                 oldItem.movie.id == newItem.movie.id
             }
             else -> false

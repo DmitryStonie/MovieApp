@@ -1,18 +1,24 @@
 package com.example.movieapp.recyclerview.viewholders
 
-import android.util.Log
+import android.view.View
+import androidx.databinding.BindingAdapter
 import com.example.movieapp.databinding.RecyclerviewTextItemBinding
 import com.example.movieapp.recyclerview.items.TextItem
 
+
 class TextViewHolder(
     private val binding: RecyclerviewTextItemBinding) : BaseViewHolder(binding.root) {
-    private var item: TextItem? = null
 
     fun bind(item: TextItem) {
-        this.item = item
-        binding.text = item.text
-        binding.textItem.setBackgroundColor(item.color)
-        Log.d("INFO", "Bind TextViewHolder ${item.text}")
+        binding.item = item
+
+    }
+    companion object{
+        @JvmStatic
+        @BindingAdapter("bind:color")
+        fun setColor(view: View, color: Int) {
+            view.setBackgroundResource(color)
+        }
     }
 
 }

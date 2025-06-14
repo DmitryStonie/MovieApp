@@ -9,7 +9,6 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.RecyclerviewMoviesBinding
 import com.example.movieapp.databinding.RecyclerviewTextItemBinding
 import com.example.movieapp.databinding.RecyclerviewTitleItemBinding
-import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.recyclerview.items.BaseItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 import com.example.movieapp.recyclerview.items.TextItem
@@ -19,9 +18,10 @@ import com.example.movieapp.recyclerview.viewholders.MoviesViewHolder
 import com.example.movieapp.recyclerview.viewholders.TextViewHolder
 import com.example.movieapp.recyclerview.viewholders.TitleViewHolder
 
-class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<BaseViewHolder>() {
+class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>()) :
+    RecyclerView.Adapter<BaseViewHolder>() {
     var onTextClick: ((position: Int, holder: TextViewHolder) -> Unit)? = null
-    var onMovieClick: ((movieItem: MovieItem) -> Unit)? = null
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -57,7 +57,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
                     parent,
                     false
                 )
-                MoviesViewHolder(binding, onMovieClick!!)
+                MoviesViewHolder(binding)
             }
 
             else -> {
@@ -89,6 +89,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
                     holder.itemView.setOnClickListener { onTextClick!!(position, holder) }
                 }
             }
+
             is TitleViewHolder -> {
                 holder.bind(items[position] as TitleItem)
             }
@@ -109,14 +110,6 @@ class RecyclerAdapter(var items: MutableList<BaseItem>) : RecyclerView.Adapter<B
         items.clear()
         items.addAll(newItems)
         diffResult.dispatchUpdatesTo(this)
-    }
-
-    fun setOnTextItemClickListener(onTextClick: (position: Int, holder: TextViewHolder) -> Unit) {
-        this.onTextClick = onTextClick
-    }
-
-    fun setOnMovieItemClickListener(onMovieClick: (movieItem: MovieItem) -> Unit) {
-        this.onMovieClick = onMovieClick
     }
 
 }

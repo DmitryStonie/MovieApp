@@ -2,6 +2,7 @@
 <layout xmlns:bind="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewmodel"
             type="com.example.movieapp.viewmodels.MovieViewModel" />
@@ -20,7 +21,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:title="@{viewmodel.name}"/>
+            bind:title="@{viewmodel.name}" />
 
         <include
             android:id="@+id/movieCard"
@@ -31,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topAppBar"
-            bind:viewmodel="@{viewmodel}"/>
+            bind:viewmodel="@{viewmodel}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

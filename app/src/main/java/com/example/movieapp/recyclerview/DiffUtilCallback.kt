@@ -25,7 +25,7 @@ class DiffUtilCallback(private val oldItems: List<BaseItem>, private val newItem
                 oldItem.title == newItem.title
             }
             oldItem is MoviesItem && newItem is MoviesItem -> {
-                oldItem.movies == newItem.movies
+                true
             }
             else -> false
         }
@@ -35,6 +35,11 @@ class DiffUtilCallback(private val oldItems: List<BaseItem>, private val newItem
         oldItemPosition: Int,
         newItemPosition: Int
     ): Boolean {
-        return oldItems[oldItemPosition] == newItems[newItemPosition]
+        return when{
+            oldItems[oldItemPosition] is MoviesItem && newItems[newItemPosition] is MoviesItem -> {
+                true
+            }
+            else -> oldItems[oldItemPosition] == newItems[newItemPosition]
+        }
     }
 }

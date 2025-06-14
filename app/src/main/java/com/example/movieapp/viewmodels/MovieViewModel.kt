@@ -5,14 +5,14 @@ import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
 import com.example.movieapp.model.Movie
-import com.example.movieapp.repository.DataRepository
+import com.example.movieapp.repository.UserSelectionsRepository
 import com.squareup.picasso.Picasso
 import java.util.Locale
 
-class MovieViewModel(val dataRepository: DataRepository) : ViewModel() {
+class MovieViewModel(val repository: UserSelectionsRepository) : ViewModel() {
     private var movie: Movie? = null
     fun getSelectedMovie() {
-        val result = dataRepository.getSelectedMovie()
+        val result = repository.getSelectedMovie()
         if (result != null) {
             movie = result
         }
@@ -39,7 +39,7 @@ class MovieViewModel(val dataRepository: DataRepository) : ViewModel() {
         fun loadImage(view: ImageView, url: String?, error: Drawable, placeholder: Drawable) {
             if (url != null) {
                 Picasso.get().load(url).error(error).placeholder(placeholder).into(view)
-            } else{
+            } else {
                 view.setImageDrawable(placeholder)
             }
         }

@@ -5,44 +5,62 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.movieapp.model.Movie
-import com.example.movieapp.repository.DataRepository
+import com.example.movieapp.repository.MovieRepository
+import com.example.movieapp.repository.UserSelectionsRepository
 import com.example.movieapp.retrofit.FilmService
 import com.example.movieapp.util.toMovie
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-class MovieListViewModel(val dataRepository: DataRepository): ViewModel() {
-    private val retrofit = Retrofit.Builder().addConverterFactory(GsonConverterFactory.create()).baseUrl("https://s3-eu-west-1.amazonaws.com/").build()
-    private val filmService = retrofit.create(FilmService::class.java)
+class MovieListViewModel(val movieRepository: MovieRepository, val selectionsRepository: UserSelectionsRepository, val filmService: FilmService): ViewModel() {
+    private var isRemoteMoviesTriedToLoad = false
+
     val genres = MutableLiveData<Set<String>>()
     val movies = MutableLiveData<List<Movie>>()
-    var selectedGenrePosition: Int? = null
-    fun getMovies(){
+
+    val selectedGenre: String?
+        get() = selectionsRepository.getSelectedGenre()
+
+    private fun getMoviesRemote(){
         viewModelScope.launch {
             try{
-                Log.d("INFO", "try to get")
                 var movies = listOf<Movie>()
                 var genres = mutableSetOf<String>()
                 val result = filmService.getFilms()
                 result.body()?.films?.forEach { film -> film.genres?.let{genres.addAll(it)} }
                 movies = result.body()?.films?.map { film -> film.toMovie() } ?: listOf()
-                dataRepository.setMovies(movies)
+                movieRepository.setMovies(movies)
                 this@MovieListViewModel.genres.postValue(genres)
                 this@MovieListViewModel.movies.postValue(movies)
             } catch(e: Exception){
                 Log.e("ERROR", "Got exception: ${e.message}")
                 this@MovieListViewModel.genres.postValue(null)
                 this@MovieListViewModel.movies.postValue(null)
+            } finally {
+                isRemoteMoviesTriedToLoad = true
             }
         }
     }
 
-    fun getMoviesByGenre(genre: String?){
-        this@MovieListViewModel.movies.postValue(dataRepository.getMovies(genre))
+    fun getMovies(){
+        if(!isRemoteMoviesTriedToLoad){
+            getMoviesRemote()
+        } else{
+            var movies = movieRepository.getMovies(selectionsRepository.getSelectedGenre())
+            var genres = mutableSetOf<String>()
+            movies?.forEach { film -> film.genres?.let{genres.addAll(it)} }
+            this@MovieListViewModel.genres.value = genres
+            this@MovieListViewModel.movies.value = movies
+        }
     }
 
+
     fun selectMovie(id: Int){
-        dataRepository.selectMovie(id)
+        val movie = movieRepository.getMovieById(id)
+        selectionsRepository.selectMovie(movie)
+    }
+
+    fun selectGenre(genre: String?){
+        this@MovieListViewModel.movies.postValue(movieRepository.getMovies(genre))
+        selectionsRepository.selectGenre(genre)
     }
 }

@@ -2,7 +2,6 @@ package com.example.movieapp.movierecyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,7 @@ import com.example.movieapp.movierecyclerview.items.MovieItem
 import com.example.movieapp.movierecyclerview.viewholders.BaseViewHolder
 import com.example.movieapp.movierecyclerview.viewholders.MovieViewHolder
 
-class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieItem: MovieItem) -> Unit)?) :
+class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieId: Int) -> Unit)?) :
     RecyclerView.Adapter<BaseViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -50,9 +49,10 @@ class RecyclerAdapter(var items: List<BaseItem>, private val onClick: ((movieIte
     ) {
         when (holder) {
             is MovieViewHolder -> {
-                holder.bind(items[position] as MovieItem)
+                val item = items[position] as MovieItem
+                holder.bind(item)
                 holder.itemView.setOnClickListener {
-                    onClick?.invoke(items[position] as MovieItem)
+                    onClick?.invoke(item.movie.id)
                 }
             }
         }
