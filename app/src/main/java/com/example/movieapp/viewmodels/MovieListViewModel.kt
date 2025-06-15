@@ -39,7 +39,7 @@ class MovieListViewModel(
                 _genres.postValue(genres)
                 _movies.postValue(movies)
             } catch (e: Exception) {
-                Log.d("ERROR", "Got exception ${e.message}")
+                Log.d("ERROR", "Got remote movies exception ${e.message}")
                 _genres.postValue(null)
                 _movies.postValue(null)
             }
