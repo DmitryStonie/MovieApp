@@ -1,6 +1,7 @@
 package com.example.movieapp.viewmodels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -17,8 +18,11 @@ class MovieListViewModel(
 ) : ViewModel() {
     private var isRemoteMoviesLoaded = false
 
-    val genres = MutableLiveData<List<String>>()
-    val movies = MutableLiveData<List<Movie>>()
+    private val _genres = MutableLiveData<List<String>?>()
+    private val _movies = MutableLiveData<List<Movie>?>()
+    val genres: LiveData<List<String>?> = _genres
+    val movies: LiveData<List<Movie>?> = _movies
+
 
     val selectedGenre: String?
         get() = selectionsRepository.getSelectedGenre()
@@ -32,12 +36,12 @@ class MovieListViewModel(
                 movieRepository.setMovies(movies)
                 val genres = movieRepository.getGenres()
                 movies = movieRepository.getMovies(null) ?: listOf()
-                this@MovieListViewModel.genres.postValue(genres)
-                this@MovieListViewModel.movies.postValue(movies)
+                _genres.postValue(genres)
+                _movies.postValue(movies)
             } catch (e: Exception) {
                 Log.d("ERROR", "Got exception ${e.message}")
-                this@MovieListViewModel.genres.postValue(null)
-                this@MovieListViewModel.movies.postValue(null)
+                _genres.postValue(null)
+                _movies.postValue(null)
             }
         }
     }
@@ -47,7 +51,7 @@ class MovieListViewModel(
             getMoviesRemote()
         } else {
             var movies = movieRepository.getMovies(selectionsRepository.getSelectedGenre())
-            this@MovieListViewModel.movies.value = movies
+            _movies.value = movies
         }
     }
 
@@ -58,6 +62,6 @@ class MovieListViewModel(
 
     fun selectGenre(genre: String?) {
         selectionsRepository.selectGenre(genre)
-        this@MovieListViewModel.movies.value = movieRepository.getMovies(genre)
+        _movies.value = movieRepository.getMovies(genre)
     }
 }

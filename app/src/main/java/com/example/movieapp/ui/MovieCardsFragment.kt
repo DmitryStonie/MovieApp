@@ -17,5 +17,4 @@ class MovieCardsFragment : Fragment() {
         return binding.root
     }
 
-
 }

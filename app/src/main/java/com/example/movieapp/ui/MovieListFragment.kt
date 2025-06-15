@@ -20,7 +20,6 @@ import com.example.movieapp.recyclerview.items.BaseItem
 import com.example.movieapp.recyclerview.items.MoviesItem
 import com.example.movieapp.recyclerview.items.TextItem
 import com.example.movieapp.recyclerview.items.TitleItem
-import com.example.movieapp.recyclerview.viewholders.TextViewHolder
 import com.example.movieapp.ui.MovieCardFragment.Companion.MOVIE_CARD_FRAGMENT
 import com.google.android.material.snackbar.Snackbar
 import com.example.movieapp.movierecyclerview.items.MovieItem
@@ -51,7 +50,7 @@ class MovieListFragment : Fragment() {
         moviesTitleItem = TitleItem(resources.getString(R.string.movies_title))
 
         val adapter = RecyclerAdapter()
-        adapter.onTextClick = { position: Int, holder: TextViewHolder ->
+        adapter.onGenreClick = { position: Int ->
             val genre = (adapter.items[position] as TextItem).text
             if (viewModel.selectedGenre == null) {
                 updateGenreItemColor(genre, R.color.yellow)
