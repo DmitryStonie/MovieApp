@@ -30,8 +30,6 @@ class MovieRepositoryImpl : MovieRepository {
         return if (result.isEmpty()) null else result.sortedBy { movie -> movie.localizedName }
     }
 
-
-
     override fun getMovieById(id: Int): Movie? {
         return movies?.get(id)
     }
@@ -41,7 +39,6 @@ class MovieRepositoryImpl : MovieRepository {
         genres?.forEach { genre -> result.add(genre) }
         return result.sorted()
     }
-
 
 }
 

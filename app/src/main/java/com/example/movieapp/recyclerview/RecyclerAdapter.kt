@@ -20,7 +20,7 @@ import com.example.movieapp.recyclerview.viewholders.TitleViewHolder
 
 class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>()) :
     RecyclerView.Adapter<BaseViewHolder>() {
-    var onTextClick: ((position: Int, holder: TextViewHolder) -> Unit)? = null
+    var onGenreClick: ((position: Int) -> Unit)? = null
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int
@@ -51,11 +51,7 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
             }
 
             else -> {
-                val inflater = LayoutInflater.from(parent.context)
-                val binding = DataBindingUtil.inflate<RecyclerviewTitleItemBinding>(
-                    inflater, R.layout.recyclerview_title_item, parent, false
-                )
-                TitleViewHolder(binding)
+                throw IllegalStateException("Illegal item with viewType $viewType")
             }
         }
         return viewHolder
@@ -71,8 +67,8 @@ class RecyclerAdapter(var items: MutableList<BaseItem> = mutableListOf<BaseItem>
         when (holder) {
             is TextViewHolder -> {
                 holder.bind(items[position] as TextItem)
-                if (onTextClick != null) {
-                    holder.itemView.setOnClickListener { onTextClick!!(position, holder) }
+                if (onGenreClick != null) {
+                    holder.itemView.setOnClickListener { onGenreClick!!(position) }
                 }
             }
 
